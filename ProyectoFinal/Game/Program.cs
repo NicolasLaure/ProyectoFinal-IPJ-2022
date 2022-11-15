@@ -1,12 +1,17 @@
 ﻿using System;
-
-namespace Game
+using SFML.System;
+using SFML.Graphics;
+using SFML.Window;
+class Program
 {
-    class Program
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        VideoMode videoMode = new VideoMode(1280, 720);
+        string title = "Asteroides";
+        RenderWindow renderWindow = new RenderWindow(videoMode, title);
+
+        GameLoop game = new GameLoop(renderWindow);
+        game.Play();
     }
 }
+
