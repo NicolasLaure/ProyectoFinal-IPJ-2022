@@ -10,8 +10,11 @@ class Program
         string title = "Asteroides";
         RenderWindow renderWindow = new RenderWindow(videoMode, title);
 
-        GameLoop game = new GameLoop(renderWindow);
-        game.Play();
+        StateController stateController = new StateController(renderWindow);
+        //MainMenuState mainMenu = new MainMenuState(renderWindow);
+        //GameLoop game = new GameLoop(renderWindow);
+        //mainMenu.Play();
+        //game.Play();
     }
 }
 
