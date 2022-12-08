@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 public class Player : AnimatedEntity
 {
-    int hp = 3;
+    public int hp = 3;
     float speed;
     RenderWindow window;
 
@@ -138,7 +138,7 @@ public class Player : AnimatedEntity
             shootTimer = 0;
         }
 
-        if (hp == 0)
+        if (hp <= 0)
             GameOver();
 
         if (!canTakeDamage)

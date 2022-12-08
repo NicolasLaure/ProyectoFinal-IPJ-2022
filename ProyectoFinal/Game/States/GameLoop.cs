@@ -116,5 +116,7 @@ class GameLoop : LoopState
     protected override void Finish()
     {
         base.Finish();
+        CollisionsHandler.RemoveEntity(player);
+
     }
 }
