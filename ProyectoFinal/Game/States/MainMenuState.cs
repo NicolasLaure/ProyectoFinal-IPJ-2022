@@ -31,6 +31,9 @@ class MainMenuState : LoopState
     private Button quitButton;
 
     bool credits = false;
+
+    public SoundEffect music;
+
     public MainMenuState(RenderWindow window) : base(window)
     {
 
@@ -84,6 +87,11 @@ class MainMenuState : LoopState
         creditsButton.OnClicked += OnPressCredits;
         returnButton.OnClicked += OnPressReturn;
         quitButton.OnClicked += OnPressQuit;
+
+
+        string musicPath = "Assets/SoundEffects/Music-tentacle-wedding.wav";
+        music = new SoundEffect(musicPath, true, 10);
+        music.Play();
     }
     protected override void Update(float deltaTime)
     {

@@ -21,6 +21,7 @@ public abstract class LoopState
     public void OnWindowClose(object sender, EventArgs eventArgs)
     {
         window.Close();
+        System.Environment.Exit(1);
     }
     private void ProcessInputs()
     {

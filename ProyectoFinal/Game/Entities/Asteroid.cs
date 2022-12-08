@@ -16,11 +16,16 @@ class Asteroid : AnimatedEntity
     public bool isTaken = false;
     public bool isSon = false;
 
+    SoundEffect explosionSound;
+
     float timer;
     float spawnCd = 0.5f;
     public Asteroid(string fileNamePath, Vector2i size, Player player) : base(fileNamePath, size)
     {
         this.player = player;
+
+        string explosionPath = "Assets/SoundEffects/explosion.ogg";
+        explosionSound = new SoundEffect(explosionPath, false, 15);
     }
 
     public void Launch(Asteroid small1, Asteroid small2)
@@ -90,6 +95,8 @@ class Asteroid : AnimatedEntity
 
         small1.position = position;
         small2.position = position;
+        explosionSound.Play();
+
 
     }
     public void Disable()
@@ -99,11 +106,13 @@ class Asteroid : AnimatedEntity
             isActive = false;
             small1.isTaken = false;
             small2.isTaken = false;
+
             CollisionsHandler.RemoveEntity(this);
         }
         else
         {
             isActive = false;
+
             CollisionsHandler.RemoveEntity(this);
         }
     }

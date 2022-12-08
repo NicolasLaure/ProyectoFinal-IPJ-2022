@@ -15,6 +15,8 @@ class GameLoop : LoopState
     public event Action OnMenuCall;
     public event Action OnLevelReset;
     public GameLoop(RenderWindow window) : base(window) { }
+
+
     protected override void Start()
     {
         base.Start();

@@ -8,6 +8,10 @@ public class Player : AnimatedEntity
     int hp = 3;
     float speed;
     RenderWindow window;
+
+    SoundEffect PlayerDamageSound;
+    public SoundEffect PlayerEngineSound;
+    SoundEffect PlayerBlasterSound;
     List<Bullet> bullets = new List<Bullet>();
     float shootCD = 1f;
     float shootTimer;
@@ -53,6 +57,14 @@ public class Player : AnimatedEntity
         {
             bullets.Add(new Bullet(bulletImageFilePath, bulletSize, Graphic.Position, this));
         }
+
+
+        string damageSoundFilePath = "Assets/SoundEffects/spaceship-Engine.wav";
+        string engineSoundFilePath = "Assets/SoundEffects/afterburnerEdit.wav";
+        string blasterSoundFilePath = "Assets/SoundEffects/BlasterEdit.wav";
+        PlayerDamageSound = new SoundEffect(damageSoundFilePath, false, 15);
+        PlayerEngineSound = new SoundEffect(engineSoundFilePath, true, 15);
+        PlayerBlasterSound = new SoundEffect(blasterSoundFilePath, false, 15);
     }
 
     public List<Bullet> GetActiveBullets()
@@ -62,6 +74,7 @@ public class Player : AnimatedEntity
     public void TakeDamage()
     {
         hp--;
+        PlayerDamageSound.Play();
     }
     public void AddScore(float points)
     {
@@ -73,6 +86,9 @@ public class Player : AnimatedEntity
     }
     void GameOver()
     {
+        PlayerEngineSound.Stop();
+        PlayerDamageSound.Stop();
+        PlayerBlasterSound.Stop();
         OnGameOver?.Invoke();
     }
     public override void Update(float deltaTime)
@@ -99,9 +115,14 @@ public class Player : AnimatedEntity
             //Vector2f forward = new Vector2f(VectorUtility.Up.X * x - VectorUtility.Up.y * y, 
             //                                VectorUtility.Up.X * y - VectorUtility.Up.y * x);
             SetCurrentAnimation(Burn);
+            if (PlayerEngineSound.IsActive() == SFML.Audio.SoundStatus.Stopped)
+                PlayerEngineSound.Play();
         }
         else
+        {
             SetCurrentAnimation(Idle);
+            PlayerEngineSound.Stop();
+        }
 
 
         shootTimer += deltaTime;
@@ -112,6 +133,7 @@ public class Player : AnimatedEntity
             if (bullet != null)
             {
                 bullet.Shoot(Graphic.Position, Graphic.Rotation, angle2);
+                PlayerBlasterSound.Play();
             }
             shootTimer = 0;
         }
@@ -122,7 +144,7 @@ public class Player : AnimatedEntity
         if (!canTakeDamage)
             damageTimer += deltaTime;
 
-        if(damageTimer >= damageCD)
+        if (damageTimer >= damageCD)
         {
             damageTimer = 0;
             canTakeDamage = true;

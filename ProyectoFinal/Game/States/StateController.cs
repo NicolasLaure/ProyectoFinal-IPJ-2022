@@ -20,6 +20,9 @@ class StateController : IDisposable
         mainMenu.OnQuitPressed += OnPressQuit;
         mainMenu.Play();
 
+
+        
+
     }
 
     public void Dispose()
@@ -42,10 +45,12 @@ class StateController : IDisposable
     private void OnPressMenu()
     {
         gameLoop.Stop();
+        mainMenu.music.Stop();
         mainMenu.Play();
     }
     private void OnPressQuit()
     {
         window.Close();
+        System.Environment.Exit(1);
     }
 }
